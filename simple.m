@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 myInternalFunction[image_] := Join[
 	ColorSeparate @ image, {
 		image, 
@@ -13,3 +15,6 @@ myInternalFunction[image_] := Join[
 
 (* this is a function that returns a list of hipster images *)
 Hipsterize[image___] := myInternalFunction[image] 
+
+
+HomerWorkFunction[stuff_]:=Hipsterize[stuff]
