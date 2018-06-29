@@ -1,0 +1,1697 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     69647,       1689]
+NotebookOptionsPosition[     48538,       1282]
+NotebookOutlinePosition[     61963,       1575]
+CellTagsIndexPosition[     61920,       1572]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Volume of the 3D Sphere without calculus", "Title",ExpressionUUID->"755e0098-9782-4df5-8299-7f54266c54d6"],
+
+Cell["\<\
+I make a derivation of the volume of the Sphere only with pre-calculus ideas.\
+\>", "Abstract",ExpressionUUID->"db4efd27-b72d-4835-a486-b18956bba0cb"],
+
+Cell["Luis Antonio Vasquez Reina, Jun. 24,  2018", "AuthorInfo",ExpressionUUID->"59a63784-4e95-46b9-9a1d-2c013f47161b"],
+
+Cell["", "Text",ExpressionUUID->"85271f44-5b04-421c-bf31-0395fab10c35"],
+
+Cell["\<\
+How does one get the volume of the sphere without knowing calculus? Simple \
+forms like cubes and prisms are fairly straightforward to study, and when \
+confronted with curved objects integral calculus is the go-to mathematical \
+tool. Yet, people have known and studied rounded objects like spheres and \
+paraboloids for centuries, thus there must be a way to proceed, and I will \
+show how.\
+\>", "Text",ExpressionUUID->"e6de1f99-99a7-465f-ae4e-5432079c27e2"],
+
+Cell[CellGroupData[{
+
+Cell["Cavalieri\[CloseCurlyQuote]s Principle ", "Section",ExpressionUUID->"35feb7e4-4e93-4e64-abc0-7b0b86e8128f"],
+
+Cell[TextData[StyleBox["Start by explaining the basics ...",
+ FontColor->GrayLevel[0.5],
+ Background->GrayLevel[1]]], "Text",ExpressionUUID->"55ddc81f-fcf7-4026-af30-\
+c2c4c901f21b"],
+
+Cell["\<\
+Suppose we have two objects in 3D between two planes. For example, consider a \
+cylinder.\
+\>", "Text",ExpressionUUID->"dc3fa30d-000e-45b8-9f6e-f2ffca697a75"],
+
+Cell["\<\
+We plot a cylinder of height 2 that starts at the origin and has radius 1\
+\>", "CodeText",ExpressionUUID->"04094273-c315-434d-a82c-a87bb37837b5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"myFirstCylinder", "=", 
+     RowBox[{"Cylinder", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0", ",", "2"}], "}"}]}], "}"}], ",", "1"}], 
+      "]"}]}], ")"}], "//", "Graphics3D"}], "\[IndentingNewLine]"}]], "Input",
+ CellLabel->"In[1]:=",ExpressionUUID->"76301ac5-6066-4a5e-ab3e-b94399208672"],
+
+Cell[BoxData[
+ Graphics3DBox[CylinderBox[{{0, 0, 0}, {0, 0, 2}}, 1],
+  ViewPoint->{1.3, -2.4, 2.},
+  ViewVertical->{0., 0., 1.}]], "Output",
+ CellChangeTimes->{3.7392875782816257`*^9},
+ CellLabel->"Out[1]=",ExpressionUUID->"545fe78c-cfb1-4377-97aa-09ae1df490d5"]
+}, Open  ]],
+
+Cell["Then, consider a slanted cylinder.", "Text",ExpressionUUID->"97910344-de12-42cf-88ff-ef9b5eaa58a2"],
+
+Cell["\<\
+This takes a little more work to construct, first we make a right cylinder \
+next to our original cylinder\
+\>", "CodeText",ExpressionUUID->"6c5f9fe8-93ae-49f3-bcd6-b36adf89eafa"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"mySlantedCylinder", "=", 
+   RowBox[{"Cylinder", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"3", ",", "3", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"3", ",", "3", ",", "2"}], "}"}]}], "}"}], ",", "1"}], 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Graphics3D", "[", 
+  RowBox[{"{", 
+   RowBox[{"myFirstCylinder", ",", "mySlantedCylinder"}], "}"}], 
+  "]"}]}], "Input",
+ CellLabel->"In[2]:=",ExpressionUUID->"a4b421f3-3232-47ad-b65d-63876d428a0d"],
+
+Cell[BoxData[
+ Graphics3DBox[{CylinderBox[{{0, 0, 0}, {0, 0, 2}}, 1], 
+   CylinderBox[{{3, 3, 0}, {3, 3, 2}}, 1]}]], "Output",
+ CellChangeTimes->{3.7392875822650614`*^9},
+ CellLabel->"Out[3]=",ExpressionUUID->"8941dc96-ad29-4124-abfd-7a256330ba64"]
+}, Open  ]],
+
+Cell["Now we will shear our new cylinder 30 degrees", "CodeText",ExpressionUUID->"0a8aebba-9fb4-4ff7-8ba3-08876882be7d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"mySlantedCylinder", "=", 
+   RowBox[{"GeometricTransformation", "[", 
+    RowBox[{"mySlantedCylinder", ",", 
+     RowBox[{"ShearingTransform", "[", 
+      RowBox[{
+       RowBox[{"30", " ", "Degree"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Graphics3D", "[", 
+  RowBox[{"{", 
+   RowBox[{"myFirstCylinder", ",", "mySlantedCylinder"}], "}"}], 
+  "]"}]}], "Input",
+ CellLabel->"In[4]:=",ExpressionUUID->"7438295b-2fdb-4b60-9462-2849043a6d73"],
+
+Cell[BoxData[
+ Graphics3DBox[{CylinderBox[{{0, 0, 0}, {0, 0, 2}}, 1], 
+   GeometricTransformation3DBox[CylinderBox[{{3, 3, 0}, {3, 3, 2}}, 1], 
+    NCache[{{{1, 0, 3^Rational[-1, 2]}, {0, 1, 0}, {0, 0, 1}}, {0, 0, 
+      0}}, {{{1, 0, 0.5773502691896258}, {0, 1, 0}, {0, 0, 1}}, {0, 0, 0}}]]},
+  ImageSize->{386.7914065885238, 230.96090877077023`},
+  ImageSizeRaw->Automatic,
+  ViewPoint->{2.0068376233810907`, -2.4111341562134205`, 1.2684773683921728`},
+  ViewVertical->{0.14343727861513939`, -0.13709903285574754`, 
+   3.0261805724503805`}]], "Output",
+ CellChangeTimes->{3.7392875861549454`*^9},
+ CellLabel->"Out[5]=",ExpressionUUID->"421c2047-179b-4341-94ee-6237cec596e3"]
+}, Open  ]],
+
+Cell["", "CodeText",ExpressionUUID->"6047e34c-4783-4ed0-b0de-5328517365be"],
+
+Cell["\<\
+Of course, this two cylinders are between two parallel planes. \
+\>", "Text",ExpressionUUID->"eac9002a-91b3-47dd-97fa-5c021bc507be"],
+
+Cell["\<\
+To visualize this, we first make the cylinders somewhat transparent\
+\>", "CodeText",ExpressionUUID->"08045b27-827e-4442-a2d1-b23256f28467"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"myFirstCylinder", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Opacity", "[", "0.4", "]"}], ",", "myFirstCylinder"}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"mySlantedCylinder", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Opacity", "[", "0.4", "]"}], ",", "mySlantedCylinder"}], 
+    "}"}]}], ";"}]}], "Input",
+ CellLabel->"In[6]:=",ExpressionUUID->"81b44ae6-0928-401d-aeb5-3029b008bb57"],
+
+Cell[TextData[StyleBox["And now we plot the two planes", "CodeText"]], "Text",ExpressionUUID->"4113e23b-ca90-4918-8e4b-c32c24b09e2f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"upperPlane", "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Opacity", "[", "0.3", "]"}], ",", 
+      RowBox[{"InfinitePlane", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "2"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "]"}]}], 
+     "}"}]}], ";"}], "  ", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"plane", " ", "z"}], "=", "2"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"lowerPlane", "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Opacity", "[", "0.3", "]"}], ",", 
+      RowBox[{"InfinitePlane", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "]"}]}], 
+     "}"}]}], " ", ";"}], "     ", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"plane", " ", "z"}], "=", "0"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Graphics3D", "[", " ", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "myFirstCylinder", ",", "mySlantedCylinder", ",", " ", "upperPlane", ",",
+       " ", "lowerPlane"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"PlotRange", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "6"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "6"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "0.5"}], ",", "2.5"}], "}"}]}], "}"}]}]}], "]"}], 
+  "                                          "}]}], "Input",
+ CellLabel->"In[8]:=",ExpressionUUID->"6a57f104-ade9-4e69-9c46-f4f2c59d53ab"],
+
+Cell[BoxData[
+ Graphics3DBox[{
+   {Opacity[0.4], CylinderBox[{{0, 0, 0}, {0, 0, 2}}, 1]}, 
+   {Opacity[0.4], 
+    GeometricTransformation3DBox[CylinderBox[{{3, 3, 0}, {3, 3, 2}}, 1], 
+     NCache[{{{1, 0, 3^Rational[-1, 2]}, {0, 1, 0}, {0, 0, 1}}, {0, 0, 
+       0}}, {{{1, 0, 0.5773502691896258}, {0, 1, 0}, {0, 0, 1}}, {0, 0, 
+       0}}]]}, 
+   {Opacity[0.3], 
+    TagBox[ConicHullRegion3DBox[{0, 0, 2}, {{1, 0, 0}, {0, 1, 0}}],
+     "InfinitePlane"]}, 
+   {Opacity[0.3], 
+    TagBox[ConicHullRegion3DBox[{0, 0, 0}, {{1, 0, 0}, {0, 1, 0}}],
+     "InfinitePlane"]}},
+  ImageSize->{359.0017696168914, 228.71326422855444`},
+  ImageSizeRaw->Automatic,
+  PlotRange->{{-1, 6}, {-1, 6}, {-0.5, 2.5}},
+  ViewPoint->{0.0004998972830873305, -3.2458109830496737`, 0.9564051507686571},
+  ViewVertical->{0.042586009513516085`, -0.3172624024923865, 
+   2.210555962954046}]], "Output",
+ CellChangeTimes->{3.7392875981363044`*^9},
+ CellLabel->"Out[10]=",ExpressionUUID->"8a2020d3-fa8f-4327-a751-a55e8218e6f2"]
+}, Open  ]],
+
+Cell["\<\
+Cavalieri' s principle states that, if every plane parallel to these two \
+planes cuts the objects in sections of the same are, then they have the same \
+volume. This is what happens in our example:\
+\>", "Text",ExpressionUUID->"ed17a622-9bfc-49e7-b66d-c4bc3183e92a"],
+
+Cell["Here there is an animation of how the cuts look", "CodeText",ExpressionUUID->"8791ca20-0791-41ff-9c03-26b65126dc26"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Graphics3D", "[", " ", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "myFirstCylinder", ",", "mySlantedCylinder", ",", " ", "upperPlane", 
+       ",", "lowerPlane", ",", "\[IndentingNewLine]", "      ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Opacity", "[", "0.6", "]"}], ",", "Orange", ",", 
+         RowBox[{"InfinitePlane", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0", ",", 
+             RowBox[{"2", "*", 
+              RowBox[{"Abs", "[", 
+               RowBox[{"Sin", "[", "t", "]"}], "]"}]}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "]"}]}], 
+        "}"}]}], " ", 
+      RowBox[{"(*", 
+       RowBox[{"oscilating", " ", "plane"}], "*)"}], "\[IndentingNewLine]", 
+      "}"}], ",", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", "6"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", "6"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.5"}], ",", "2.5"}], "}"}]}], "}"}]}]}], "]"}], ",", 
+   " ", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "0", ",", "\[Pi]", ",", "0.01"}], "}"}]}], 
+  "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.7392875556127377`*^9, 3.7392875565499105`*^9}},
+ CellLabel->"In[11]:=",ExpressionUUID->"04952fd0-3c88-4376-932c-6f275f5633fb"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`t$$ = 1.43, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`t$$], 0, Pi, 0.01}}, Typeset`size$$ = {
+    360., {146., 151.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`t$5542$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`t$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`t$$, $CellContext`t$5542$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Graphics3D[{$CellContext`myFirstCylinder, \
+$CellContext`mySlantedCylinder, $CellContext`upperPlane, \
+$CellContext`lowerPlane, {
+          Opacity[0.6], Orange, 
+          InfinitePlane[{0, 0, 2 Abs[
+              Sin[$CellContext`t$$]]}, {{1, 0, 0}, {0, 1, 0}}]}}, 
+        PlotRange -> {{-1, 6}, {-1, 6}, {-0.5, 2.5}}], 
+      "Specifications" :> {{$CellContext`t$$, 0, Pi, 0.01}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {206., 212.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.739287602525899*^9, 3.73928762181485*^9}},
+ CellLabel->"Out[11]=",ExpressionUUID->"2e9c9120-53b9-4459-94b7-314c39ca618c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Volume of the sphere", "Section",ExpressionUUID->"69c2789e-757d-42de-8e7a-aa67a7c35b9d"],
+
+Cell[CellGroupData[{
+
+Cell["Making the 3D construction", "Subsection",ExpressionUUID->"7de5c4c6-a64b-46a1-a690-20421acf8327"],
+
+Cell["\<\
+As usually with dealing with mathematical object, now that we can use \
+Cavalieri\[CloseCurlyQuote]s principle, we have to figure out an ingenious \
+way to use it to solve our problem. Luckily, people have already figured that \
+out for us.  Consider a sphere of radius \[ScriptCapitalR].\
+\>", "Text",ExpressionUUID->"0ed2d935-e8ff-4c05-9e95-1dd6631482fc"],
+
+Cell["\<\
+Sphere or radius \[ScriptCapitalR] at the origin (we will graphic it as if \
+\[ScriptCapitalR] is 2, but the argument holds for any \[ScriptCapitalR], of \
+course).\
+\>", "CodeText",ExpressionUUID->"a127144d-d9f3-4e73-9654-4e9ded4f56d8"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[ScriptCapitalR]", "=", "2"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"mySphere", "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Opacity", "[", "0.4", "]"}], ",", 
+      RowBox[{"Sphere", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", "\[ScriptCapitalR]"}],
+        "]"}]}], "}"}]}], ";"}], " ", 
+  RowBox[{"(*", 
+   RowBox[{"sphere", " ", "is", " ", "at", " ", "the", " ", "origin"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Graphics3D", "[", "mySphere", "]"}]}], "Input",
+ CellLabel->"In[12]:=",ExpressionUUID->"2166a8f0-014c-4f32-8947-05a4e3dfd919"],
+
+Cell[BoxData[
+ Graphics3DBox[
+  {Opacity[0.4], SphereBox[{0, 0, 0}, 2]},
+  ImageSize->{358.1490547886147, 357.32148605965546`},
+  ImageSizeRaw->Automatic,
+  ViewPoint->{3.2988434304439034`, 0.35692406537368376`, 0.6635037550566066},
+  ViewVertical->{0.4112825058968157, 0.12331696698197875`, 
+   0.9031276908597153}]], "Output",
+ CellChangeTimes->{3.7392876433983564`*^9},
+ CellLabel->"Out[14]=",ExpressionUUID->"8122889f-79d0-4054-a5b8-b495b0bf4c10"]
+}, Open  ]],
+
+Cell["\<\
+Now, draw a cylinder of height 2\[ScriptCapitalR] and radius \
+\[ScriptCapitalR] next to the sphere\
+\>", "Text",ExpressionUUID->"4813e97b-6074-4845-b079-05dfadd34088"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"myCylinder", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Opacity", "[", "0.1", "]"}], ",", "Red", ",", 
+     RowBox[{"Cylinder", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"5", ",", "5", ",", 
+           RowBox[{"-", "\[ScriptCapitalR]"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", "5", ",", "\[ScriptCapitalR]"}], "}"}]}], "}"}], 
+       ",", "\[ScriptCapitalR]"}], "]"}]}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Graphics3D", "[", 
+  RowBox[{"{", 
+   RowBox[{"mySphere", ",", "myCylinder"}], "}"}], "]"}]}], "Input",
+ CellLabel->"In[15]:=",ExpressionUUID->"fee92e2d-7431-4ad6-8a70-f307a778cde7"],
+
+Cell[BoxData[
+ Graphics3DBox[{
+   {Opacity[0.4], SphereBox[{0, 0, 0}, 2]}, 
+   {RGBColor[1, 0, 0], Opacity[0.1], CylinderBox[{{5, 5, -2}, {5, 5, 2}}, 2]}},
+  ImageSize->{359.356446157312, 215.61402400591942`},
+  ImageSizeRaw->Automatic,
+  ViewPoint->{2.0153232451030707`, -2.5359303942133833`, 0.9785342372405675},
+  ViewVertical->{0.3506346625736662, -0.43490749988296695`, 
+   1.8661587351384943`}]], "Output",
+ CellChangeTimes->{3.739287645929014*^9},
+ CellLabel->"Out[16]=",ExpressionUUID->"dcc9b232-d244-4834-98b0-eca5b9a4f791"]
+}, Open  ]],
+
+Cell["", "CodeText",ExpressionUUID->"7a9ac988-03a4-4c18-9dca-ea7cdc6e168b"],
+
+Cell["\<\
+After that, we construct two cones inside the cylinder. Both cones have their \
+top at the center of the sphere, and their bottoms are the extremes of the \
+cylinder.\
+\>", "Text",ExpressionUUID->"e3998e4d-7b72-4f12-ab60-8520725af581"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"upperCone", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Opacity", "[", "0.1", "]"}], ",", "Blue", ",", 
+     RowBox[{"Cone", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"5", ",", "5", ",", 
+           RowBox[{"-", "\[ScriptCapitalR]"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", "5", ",", "0"}], "}"}]}], "}"}], ",", 
+       "\[ScriptCapitalR]"}], "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"lowerCone", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Opacity", "[", "0.1", "]"}], ",", "Blue", ",", 
+     RowBox[{"Cone", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"5", ",", "5", ",", "\[ScriptCapitalR]"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", "5", ",", "0"}], "}"}]}], "}"}], ",", 
+       "\[ScriptCapitalR]"}], "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Graphics3D", "[", 
+  RowBox[{"{", 
+   RowBox[{
+   "mySphere", ",", "myCylinder", ",", "upperCone", ",", "lowerCone"}], "}"}],
+   "]"}]}], "Input",
+ CellLabel->"In[17]:=",ExpressionUUID->"ad0b436e-e8ca-4f72-b448-c2ec1b4c77b8"],
+
+Cell[BoxData[
+ Graphics3DBox[{
+   {Opacity[0.4], SphereBox[{0, 0, 0}, 2]}, 
+   {RGBColor[1, 0, 0], Opacity[0.1], CylinderBox[{{5, 5, -2}, {5, 5, 2}}, 2]}, 
+   {RGBColor[0, 0, 1], Opacity[0.1], ConeBox[{{5, 5, -2}, {5, 5, 0}}, 2]}, 
+   {RGBColor[0, 0, 1], Opacity[0.1], ConeBox[{{5, 5, 2}, {5, 5, 0}}, 2]}},
+  ImageSize->{399.78472792377147`, 392.1158573015844},
+  ImageSizeRaw->Automatic,
+  ViewPoint->{0.8478425867983828, -0.9583257820477747, 3.1325348590995037`},
+  ViewVertical->{0.0172301158475536, 0.25298689351012865`, 
+   2.1764615942570917`}]], "Output",
+ CellChangeTimes->{3.739287648397184*^9},
+ CellLabel->"Out[19]=",ExpressionUUID->"383b510a-c754-477c-a91b-4efe58e58185"]
+}, Open  ]],
+
+Cell["We cut both objects with a plane", "Text",ExpressionUUID->"096e9eb5-c4b2-4b0b-9ce3-0ad151da7e2e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "mySphere", ",", "myCylinder", ",", "upperCone", ",", "lowerCone", ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Opacity", "[", "0.4", "]"}], ",", "Orange", ",", 
+         RowBox[{"InfinitePlane", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0", ",", 
+             RowBox[{"2", "*", 
+              RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}]}], "]"}]}], 
+        "}"}]}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"PlotRange", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "3"}], ",", "8"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "3"}], ",", "8"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "2.5"}], ",", "2.5"}], "}"}]}], "}"}]}]}], 
+    "\[IndentingNewLine]", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "0", ",", 
+     RowBox[{"2", "\[Pi]"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.739287654208531*^9, 3.7392876557704506`*^9}},
+ CellLabel->"In[20]:=",ExpressionUUID->"74f33309-d2d3-4adc-ab01-59817042e2af"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`t$$ = 2.2870794518133692`, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`t$$], 0, 2 Pi}}, Typeset`size$$ = {
+    360., {148., 154.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`t$8636$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`t$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`t$$, $CellContext`t$8636$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Graphics3D[{$CellContext`mySphere, $CellContext`myCylinder, \
+$CellContext`upperCone, $CellContext`lowerCone, {
+          Opacity[0.4], Orange, 
+          
+          InfinitePlane[{0, 0, 2 Sin[$CellContext`t$$]}, {{1, 0, 0}, {0, 1, 
+           0}}]}}, PlotRange -> {{-3, 8}, {-3, 8}, {-2.5, 2.5}}], 
+      "Specifications" :> {{$CellContext`t$$, 0, 2 Pi}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {195., 201.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7392876565358973`*^9},
+ CellLabel->"Out[20]=",ExpressionUUID->"54655d01-1d31-41cd-b1b0-c9e9d25d6773"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The way to use Cavalieri\[CloseCurlyQuote] s principle will be to study the \
+regions that appear due to this cut. Specifically, the region inside the \
+sphere and the region inside the cylinder but ",
+ StyleBox["outside",
+  FontWeight->"Bold"],
+ " the cones. "
+}], "Text",ExpressionUUID->"844073b2-751d-4156-a5a3-8ac3263913fd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Looking at the cuts", "Subsection",ExpressionUUID->"095b52fc-d65a-4680-aa1a-6459bbde1834"],
+
+Cell["\<\
+If the plane is at a distance \[ScriptD] from the center of the cylinder, in \
+the horizontal plane, we get a cut that consists of three circles.\
+\>", "Text",ExpressionUUID->"62fae394-505e-42a5-9eb9-369e0021c3f9"],
+
+Cell[TextData[{
+ "Taking ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[ScriptD]", "=", "1.2"}], TraditionalForm]],ExpressionUUID->
+  "197fb0ad-f477-43f2-ad66-ecde40c28bf1"],
+ " and a provisional radius for the circle that comes from the sphere:"
+}], "CodeText",ExpressionUUID->"3d1bea77-32b7-4149-ab3d-99850f85732c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"d", "=", "1.2"}], ";"}], "\n", 
+ RowBox[{"Graphics", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Circle", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"0", ",", "0"}], "}"}], ",", "1.6"}], "]"}], ",", " ", 
+    RowBox[{"(*", 
+     RowBox[{"1.6", " ", "is", " ", "a", " ", "provisional", " ", "radius"}], 
+     "*)"}], "\n", "\t\t", 
+    RowBox[{"Circle", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"5", ",", "0"}], "}"}], ",", "\[ScriptCapitalR]"}], "]"}], ",",
+     "\n", "\t\t", 
+    RowBox[{"Circle", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"5", ",", "0"}], "}"}], ",", "d"}], "]"}]}], "  ", "}"}], 
+  "]"}]}], "Input",
+ CellLabel->"In[62]:=",ExpressionUUID->"d2d39365-b24d-4364-b0ac-ed622555e818"],
+
+Cell[BoxData[
+ GraphicsBox[{CircleBox[{0, 0}, 1.6], CircleBox[{5, 0}, 2], 
+   CircleBox[{5, 0}, 1.2]}]], "Output",
+ CellLabel->"Out[63]=",ExpressionUUID->"d5e157b6-8b40-4a99-845d-223baa9d7402"]
+}, Open  ]],
+
+Cell["\<\
+To get the exact dimensions of these circles, we will use another ingenious \
+trick, notice that a vertical cut looks like this \
+\>", "Text",ExpressionUUID->"fabfadc3-5ca0-464f-8a65-39da94f33259"],
+
+Cell["\<\
+Remember that the center of the cylinder is at {5,5,0}, this is why so many 5\
+\[CloseCurlyQuote]s appear in the code.\
+\>", "CodeText",ExpressionUUID->"924017ca-4807-4f24-a9c2-8bf99b6bb8b6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"verticalCut", "=", 
+  RowBox[{"Graphics", "[", 
+   RowBox[{"{", " ", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Circle", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"0", ",", "0"}], "}"}], ",", "\[ScriptCapitalR]"}], "]"}], 
+     ",", "\[IndentingNewLine]", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "-", "\[ScriptCapitalR]"}], ",", 
+          RowBox[{"-", "\[ScriptCapitalR]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "+", "\[ScriptCapitalR]"}], ",", 
+          RowBox[{"-", "\[ScriptCapitalR]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "+", "\[ScriptCapitalR]"}], ",", 
+          RowBox[{"+", "\[ScriptCapitalR]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "-", "\[ScriptCapitalR]"}], ",", "\[ScriptCapitalR]"}],
+          "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "-", "\[ScriptCapitalR]"}], ",", 
+          RowBox[{"-", "\[ScriptCapitalR]"}]}], "}"}]}], "}"}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"5", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "+", "\[ScriptCapitalR]"}], ",", "\[ScriptCapitalR]"}],
+          "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "-", "\[ScriptCapitalR]"}], ",", "\[ScriptCapitalR]"}],
+          "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"5", ",", "0"}], "}"}]}], "}"}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Line", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"5", ",", "0"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "+", "\[ScriptCapitalR]"}], ",", 
+          RowBox[{"-", "\[ScriptCapitalR]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "-", "\[ScriptCapitalR]"}], ",", 
+          RowBox[{"-", "\[ScriptCapitalR]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"5", ",", "0"}], "}"}]}], "}"}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"InfiniteLine", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0", ",", "d"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"5", ",", "d"}], "}"}]}], "}"}], "]"}]}], "        ", "}"}], 
+   "]"}]}]], "Input",
+ CellLabel->"In[40]:=",ExpressionUUID->"8fd1a1d3-fadb-4c89-87d4-5cf7ff656488"],
+
+Cell[BoxData[
+ GraphicsBox[{CircleBox[{0, 0}, 2], 
+   LineBox[{{3, -2}, {7, -2}, {7, 2}, {3, 2}, {3, -2}}], 
+   LineBox[{{5, 0}, {7, 2}, {3, 2}, {5, 0}}], 
+   LineBox[{{5, 0}, {7, -2}, {3, -2}, {5, 0}}], 
+   TagBox[ConicHullRegionBox[{{0, 1.2}, {5, 1.2}}],
+    "InfiniteLine"]}]], "Output",
+ CellLabel->"Out[40]=",ExpressionUUID->"ceb29933-785f-4b9f-985d-78de85d559bb"]
+}, Open  ]],
+
+Cell["\<\
+Notice that the section of the cylinder is a square because we constructed \
+the cylinder with radius \[ScriptCapitalR] and height 2\[ScriptCapitalR]. It \
+is very useful to label this graphic:\
+\>", "Text",ExpressionUUID->"a6d93f5e-b4d0-416c-a86f-bd0ab2bb2dd3"],
+
+Cell["Labeling can become cumbersome", "CodeText",ExpressionUUID->"781246fe-22ef-4f08-948a-c3645733bca0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Show", "[", 
+  RowBox[{"verticalCut", ",", "\[IndentingNewLine]", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Red", ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "d"}], "}"}]}], "}"}], "]"}]}], "}"}], ",", 
+      RowBox[{"Text", "[", 
+       RowBox[{"\"\<\[ScriptD]\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "0.2"}], ",", 
+          RowBox[{"d", "/", "2"}]}], "}"}]}], "]"}]}], "}"}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Red", ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"5", ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"5", ",", "d"}], "}"}]}], "}"}], "]"}]}], "}"}], ",", 
+      RowBox[{"Text", "[", 
+       RowBox[{"\"\<\[ScriptD]\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "-", "0.2"}], ",", 
+          RowBox[{"d", "/", "2"}]}], "}"}]}], "]"}]}], "}"}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Red", ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0", ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Sqrt", "[", 
+              RowBox[{
+               RowBox[{"\[ScriptCapitalR]", "^", "2"}], "-", 
+               RowBox[{"d", "^", "2"}]}], "]"}], ",", "d"}], "}"}]}], "}"}], 
+         "]"}]}], "}"}], ",", 
+      RowBox[{"Text", "[", 
+       RowBox[{"\"\<\[ScriptCapitalR]\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "+", "0.2"}], ",", 
+          RowBox[{"d", "/", "2"}]}], "}"}]}], "]"}]}], "}"}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Red", ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"5", ",", "d"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"5", "+", "d"}], ",", "d"}], "}"}]}], "}"}], "]"}]}], 
+       "}"}], ",", 
+      RowBox[{"Text", "[", 
+       RowBox[{"\"\<h\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "+", "0.5"}], ",", 
+          RowBox[{"d", "+", "0.2"}]}], "}"}]}], "]"}]}], "}"}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"Red", ",", 
+        RowBox[{"Line", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"5", ",", "0"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"7", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], ",", 
+      RowBox[{"Text", "[", 
+       RowBox[{"\"\<\[ScriptCapitalR]\>\"", ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"5", "+", "1"}], ",", 
+          RowBox[{"-", "0.2"}]}], "}"}]}], "]"}]}], "}"}], "]"}]}], "      ", 
+  "]"}]], "Input",
+ CellLabel->
+  "In[272]:=",ExpressionUUID->"54de077f-6dc5-4556-b12e-b8cb8dbc9628"],
+
+Cell[BoxData[
+ GraphicsBox[{{CircleBox[{0, 0}, 2], 
+    LineBox[{{3, -2}, {7, -2}, {7, 2}, {3, 2}, {3, -2}}], 
+    LineBox[{{5, 0}, {7, 2}, {3, 2}, {5, 0}}], 
+    LineBox[{{5, 0}, {7, -2}, {3, -2}, {5, 0}}], 
+    TagBox[ConicHullRegionBox[{{0, 1.2}, {5, 1.2}}],
+     "InfiniteLine"]}, {
+    {RGBColor[1, 0, 0], LineBox[{{0, 0}, {0, 1.2}}]}, 
+    InsetBox["\<\"\[ScriptD]\"\>", {-0.2, 0.6}]}, {
+    {RGBColor[1, 0, 0], LineBox[{{5, 0}, {5, 1.2}}]}, 
+    InsetBox["\<\"\[ScriptD]\"\>", {4.8, 0.6}]}, {
+    {RGBColor[1, 0, 0], LineBox[{{0, 0}, {1.6, 1.2}}]}, 
+    InsetBox["\<\"\[ScriptCapitalR]\"\>", {1.2, 0.6}]}, {
+    {RGBColor[1, 0, 0], LineBox[{{5, 1.2}, {6.2, 1.2}}]}, 
+    InsetBox["\<\"h\"\>", {5.5, 1.4}]}, {
+    {RGBColor[1, 0, 0], LineBox[{{5, 0}, {7, 0}}]}, 
+    InsetBox["\<\"\[ScriptCapitalR]\"\>", {6, -0.2}]}}]], "Output",
+ CellLabel->
+  "Out[272]=",ExpressionUUID->"56f0f51a-b1de-4f18-91fa-67c53d27c506"]
+}, Open  ]],
+
+Cell[TextData[{
+ "By the Pythagorean Theorem, the radius of the circle in the cut of the \
+sphere is ",
+ Cell[BoxData[
+  FormBox[
+   SqrtBox[
+    RowBox[{
+     SuperscriptBox["\[ScriptCapitalR]", "2"], "-", 
+     SuperscriptBox["\[ScriptD]", "2"]}]], TraditionalForm]],ExpressionUUID->
+  "eec9d525-d374-40c9-86e7-e0b7693f0012"],
+ ", also, since the section of the cylinder is a square, we have that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", "=", "d"}], TraditionalForm]],ExpressionUUID->
+  "c853e3f0-8548-46c0-bf5f-ae7e3efa6807"],
+ " ! "
+}], "Text",ExpressionUUID->"f08c8260-3b8f-417e-9dd0-480286bd4ad7"],
+
+Cell["Now the horizontal cut looks like this:", "Text",ExpressionUUID->"155ca796-cd21-475a-b94a-86db58b2d210"],
+
+Cell["\<\
+Some numbers may appear random, they are used to get a good plot. Rest \
+assure, this does not affect the argument in any way.\
+\>", "CodeText",ExpressionUUID->"d843212c-8ecd-4bf2-8818-fb93661e84b7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Show", "[", 
+   RowBox[{
+    RowBox[{"Graphics", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Circle", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", "1.6"}], "]"}], ",", " ", 
+       RowBox[{"(*", 
+        RowBox[{
+        "1.6", " ", "is", " ", "a", " ", "provisional", " ", "radius"}], 
+        "*)"}], "\n", "\t\t", 
+       RowBox[{"Circle", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"5", ",", "0"}], "}"}], ",", "\[ScriptCapitalR]"}], "]"}], 
+       ",", "\n", "\t\t", 
+       RowBox[{"Circle", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"5", ",", "0"}], "}"}], ",", "d"}], "]"}]}], "}"}], "]"}], 
+    ",", "\[IndentingNewLine]", "\t", 
+    RowBox[{"Graphics", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Red", ",", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"1.6", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], ",", 
+       RowBox[{"Text", "[", 
+        RowBox[{
+        "\"\<\!\(TraditionalForm\`\*SqrtBox[\(\*SuperscriptBox[\(\
+\[ScriptCapitalR]\), \(2\)] - \*SuperscriptBox[\(\[ScriptD]\), \
+\(2\)]\)]\)\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"1.6", "/", "2"}], ",", "0.3"}], "}"}]}], "]"}]}], "}"}], 
+     "]"}], ",", "\[IndentingNewLine]", "\t", 
+    RowBox[{"Graphics", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Red", ",", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"5", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"5", "+", "1.2"}], ",", "0"}], "}"}]}], "}"}], "]"}]}], 
+        "}"}], ",", 
+       RowBox[{"Text", "[", 
+        RowBox[{"\"\<\!\(TraditionalForm\`d\)\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"5", "+", 
+            RowBox[{"1.6", "/", "2"}]}], ",", "0.3"}], "}"}]}], "]"}]}], 
+      "}"}], "]"}], ",", "\[IndentingNewLine]", "\t", 
+    RowBox[{"Graphics", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Red", ",", 
+         RowBox[{"Line", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"5", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"5", "+", "1.7"}], ",", "1.0"}], "}"}]}], "}"}], 
+          "]"}]}], "}"}], ",", 
+       RowBox[{"Text", "[", 
+        RowBox[{"\"\<\!\(TraditionalForm\`\[ScriptCapitalR]\)\>\"", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"5", "+", "1.2"}], ",", "0.9"}], "}"}]}], "]"}]}], "}"}], 
+     "]"}]}], " ", "]"}], "\n"}]], "Input",ExpressionUUID->"3ae97627-3be8-\
+4a76-b9d7-fee64a03a58c"],
+
+Cell[BoxData[
+ GraphicsBox[{{CircleBox[{0, 0}, 1.6], CircleBox[{5, 0}, 2], 
+    CircleBox[{5, 0}, 1.2]}, {
+    {RGBColor[1, 0, 0], LineBox[{{0, 0}, {1.6, 0}}]}, 
+    InsetBox["\<\"\\!\\(TraditionalForm\\`\\*SqrtBox[\\(\\*SuperscriptBox[\\(\
+\[ScriptCapitalR]\\), \\(2\\)] - \\*SuperscriptBox[\\(\[ScriptD]\\), \\(2\\)]\
+\\)]\\)\"\>", {0.8, 0.3}]}, {
+    {RGBColor[1, 0, 0], LineBox[{{5, 0}, {6.2, 0}}]}, 
+    InsetBox["\<\"\\!\\(TraditionalForm\\`d\\)\"\>", {5.8, 0.3}]}, {
+    {RGBColor[1, 0, 0], LineBox[{{5, 0}, {6.7, 1.}}]}, 
+    InsetBox["\<\"\\!\\(TraditionalForm\\`\[ScriptCapitalR]\\)\"\>", \
+{6.2, 0.9}]}},
+  ImageSize->{309., Automatic}]], "Output",
+ CellLabel->
+  "Out[275]=",ExpressionUUID->"ac500b0d-8b1b-4dbf-8eec-b9f8c35c74a8"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The area of the horizontal cut of the sphere is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Pi]", "(", 
+    RowBox[{
+     SuperscriptBox["\[ScriptCapitalR]", "2"], "-", 
+     SuperscriptBox["\[ScriptD]", "2"]}], ")"}], TraditionalForm]],
+  ExpressionUUID->"705f39b3-042d-4869-9189-e1d26ad77d4f"],
+ ", and the horizontal cut of the region inside the cylinder but outside the \
+cone has an area ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["\[Pi]\[ScriptCapitalR]", "2"], "-", 
+    SuperscriptBox["\[Pi]\[ScriptD]", "2"]}], TraditionalForm]],
+  ExpressionUUID->"c40b726c-b3c0-45d1-80e4-0cb80046a1f5"],
+ ", which are equal! This holds for every cutting plane. "
+}], "Text",ExpressionUUID->"dcf8262e-9b22-450d-8597-98b30205f410"],
+
+Cell["\<\
+Finally, by Cavalieri\[CloseCurlyQuote]s Principle, we have that the sphere \
+and the region inside the cylinder but outside the cone have the same volume:\
+\>", "Text",ExpressionUUID->"03f521e9-9f2d-4d39-b95a-f148249d06ca"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"Volume", 
+    RowBox[{"(", "Sphere", ")"}]}], "    ", "=", " ", 
+   RowBox[{
+    RowBox[{"Volume", 
+     RowBox[{"(", "Cylinder", ")"}]}], "-", 
+    RowBox[{"2", "*", "Volume", 
+     RowBox[{"(", "Cone", ")"}]}]}]}], " "}], "\[IndentingNewLine]", 
+ RowBox[{"\t\t\t\t", 
+  RowBox[{"=", 
+   RowBox[{
+    RowBox[{"Height", 
+     RowBox[{"(", "Cylinder", ")"}], "*", "Area", 
+     RowBox[{"(", "BaseOfCylinder", ")"}]}], " ", "-", " ", 
+    RowBox[{"2", "*", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "/", "3"}], ")"}], " ", "Height", 
+     RowBox[{"(", "Cone", ")"}], "*", "Area", 
+     RowBox[{"(", 
+      RowBox[{"Base", " ", "OfCone"}], ")"}]}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{"\t\t\t\t", 
+  RowBox[{"=", 
+   RowBox[{
+    RowBox[{"2", "\[ScriptCapitalR]", " ", 
+     FormBox[
+      RowBox[{"*", 
+       SuperscriptBox["\[Pi]\[ScriptCapitalR]", "2"]}],
+      TraditionalForm]}], " ", "-", " ", 
+    RowBox[{
+     RowBox[{"2", "/", "3"}], " ", "*", " ", "\[ScriptCapitalR]", " ", "*", 
+     FormBox[
+      SuperscriptBox["\[Pi]\[ScriptCapitalR]", "2"],
+      TraditionalForm]}]}]}], " "}], "\[IndentingNewLine]", 
+ RowBox[{"\t\t\t\t", 
+  RowBox[{"=", 
+   RowBox[{
+    RowBox[{"2", 
+     FormBox[
+      SuperscriptBox["\[Pi]\[ScriptCapitalR]", "3"],
+      TraditionalForm]}], "-", 
+    RowBox[{
+     RowBox[{"2", "/", "3"}], " ", 
+     FormBox[
+      SuperscriptBox["\[Pi]\[ScriptCapitalR]", "3"],
+      TraditionalForm]}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{"\t\t\t\t", 
+  RowBox[{"=", 
+   RowBox[{
+    RowBox[{"4", "/", "3"}], " ", 
+    FormBox[
+     SuperscriptBox["\[Pi]\[ScriptCapitalR]", "3"],
+     TraditionalForm]}]}]}]}], "DisplayFormula",ExpressionUUID->"e8842056-\
+5081-426d-ac03-9e75e7db8fff"],
+
+Cell["And that completes the proof.", "Text",ExpressionUUID->"f8f4aaa0-fee4-4e3f-8c8e-f8997d850877"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Furthermore", "Section",ExpressionUUID->"9da19663-7179-45c9-8160-ad35832309c2"],
+
+Cell["\<\
+You may have noticed that we took the formula for the volume of the cone and \
+the volume of the cylinder as given. Yet both of these are curved objects. \
+So, is this cheating? Luckily, those formulae can also be derived with \
+Cavalieri\[CloseCurlyQuote]s principle, and it\[CloseCurlyQuote]s a nice \
+exercise for the reader. Hints: Construct an appropriate pyramid for the \
+cone, and an appropriate parallelepiped for the cylinder. \
+\>", "Text",ExpressionUUID->"45c45f6e-321c-4ce7-9657-950c1134d308"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Author contact information", "Section",ExpressionUUID->"a78f6e4f-dbdf-4763-a44f-16569b36e665"],
+
+Cell["You can find me at:", "Text",ExpressionUUID->"44146aed-2d19-4c66-bfba-1e67f1c1dfb3"],
+
+Cell["Blurry for spam reasons", "CodeText",ExpressionUUID->"937b5485-dc17-48dd-9aab-cd2430b3e333"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Rasterize", "[", 
+   RowBox[{"\"\<LUIS.VASQUEZ.PERS.LEARN@GMAIL.COM\>\"", ",", 
+    RowBox[{"RasterSize", "\[Rule]", "300"}]}], "]"}], "//", " ", 
+  RowBox[{
+   RowBox[{"Blur", "[", 
+    RowBox[{"#", ",", "1.3"}], "]"}], "&"}]}]], "Input",
+ CellLabel->"In[81]:=",ExpressionUUID->"db031af0-ae61-40a0-8a8e-f247bccedf03"],
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[RasterBox[CompressedData["
+1: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
+TeR/ASpwfJI=
+    "], {{0, 20}, {299, 0}}, {0, 255},
+    ColorFunction->RGBColor],
+   BoxForm`ImageTag["Byte", ColorSpace -> "RGB", Interleaving -> False],
+   Selectable->False],
+  DefaultBaseStyle->"ImageGraphics",
+  ImageSizeRaw->{299, 20},
+  PlotRange->{{0, 299}, {0, 20}}]], "Output",
+ CellLabel->"Out[81]=",ExpressionUUID->"e12dac55-0c44-4d97-98a4-46212aaae6e5"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1264, 637},
+WindowMargins->{{-8, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (March 6, 2018)",
+StyleDefinitions->Notebook[{
+   Cell[
+    StyleData[StyleDefinitions -> "Default.nb"]], 
+   Cell[
+    StyleData["Title"], PageWidth -> WindowWidth, ShowCellBracket -> False, 
+    CellMargins -> {{0, 0}, {0, 0}}, 
+    CellBracketOptions -> {"OverlapContent" -> True}, 
+    CellElementSpacings -> {"ClosedGroupTopMargin" -> 150}, 
+    CellGroupingRules -> {"TitleGrouping", 0}, PageBreakAbove -> True, 
+    CellFrameMargins -> {{20, 50}, {6, 78}}, TextAlignment -> Left, 
+    LineSpacing -> {1, 4}, LanguageCategory -> "NaturalLanguage", 
+    CounterIncrements -> {"Title"}, 
+    CounterAssignments -> {{"Section", 0}, {"Equation", 0}, {"Figure", 0}, {
+      "Subtitle", 0}, {"Subsubtitle", 0}, {"Item", 0}, {"Subitem", 0}, {
+      "Subsubitem", 0}, {"ItemNumbered", 0}, {"SubitemNumbered", 0}, {
+      "SubsubitemNumbered", 0}}, MenuSortingValue -> 1100, MenuCommandKey -> 
+    "1", FontFamily -> "Source Sans Pro", FontSize -> 44, 
+    FontTracking -> -0.8, FontColor -> RGBColor[255, 255, 255], Background -> 
+    RGBColor[0.71375, 0.20785, 0.17255]], 
+   Cell[
+    StyleData["Abstract"], PageWidth -> WindowWidth, ShowCellBracket -> False,
+     ShowSelection -> True, CellMargins -> {{0, 0}, {0, 0}}, 
+    CellBracketOptions -> {"OverlapContent" -> True}, 
+    CellFrameMargins -> {{30, 40}, {24, 2}}, TextAlignment -> Left, 
+    FontFamily -> "Source Sans Pro", FontSize -> 16, FontSlant -> "Italic", 
+    FontColor -> RGBColor[255, 255, 255], Background -> 
+    RGBColor[0.71375, 0.20785, 0.17255]], 
+   Cell[
+    StyleData["AuthorInfo"], PageWidth -> WindowWidth, 
+    CellFrame -> {{0, 0}, {8, 0}}, ShowCellBracket -> True, ShowSelection -> 
+    True, CellMargins -> {{0, 0}, {0, 0}}, 
+    CellBracketOptions -> {"OverlapContent" -> True}, 
+    CellFrameMargins -> {{30, 40}, {10, 4}}, CellFrameColor -> 
+    RGBColor[0.988235, 0.403922, 0.0313725], TextAlignment -> Left, 
+    FontFamily -> "Source Sans Pro", FontSize -> 17, FontWeight -> "SemiBold",
+     FontSlant -> "Plain", FontColor -> RGBColor[255, 255, 255], Background -> 
+    RGBColor[0.71375, 0.20785, 0.17255]], 
+   Cell[
+    CellGroupData[{
+      Cell[
+       StyleData["Chapter"], ShowCellBracket -> False, 
+       CellMargins -> {{20, 30}, {10, 45}}, 
+       StyleKeyMapping -> {
+        "Tab" -> "Subchapter", "Backspace" -> 
+         "Title", $CellContext`KeyEvent[
+          "Tab", $CellContext`Modifiers -> {$CellContext`Shift}] -> "Title"}, 
+       CellGroupingRules -> {"SectionGrouping", 10}, PageBreakBelow -> False, 
+       LineSpacing -> {1, 4}, LanguageCategory -> "NaturalLanguage", 
+       CounterIncrements -> "Chapter", 
+       CounterAssignments -> {{"Subchapter", 0}, {"Section", 0}, {
+         "Equation", 0}, {"Figure", 0}, {"Subsubtitle", 0}, {"Item", 0}, {
+         "Subitem", 0}, {"Subsubitem", 0}, {"ItemNumbered", 0}, {
+         "SubitemNumbered", 0}, {"SubsubitemNumbered", 0}}, MenuSortingValue -> 
+       1150, MenuCommandKey -> "2", FontFamily -> "Source Sans Pro", FontSize -> 
+       34, FontTracking -> -0.5, FontColor -> 
+       RGBColor[
+        0.21176470588235294`, 0.21176470588235294`, 0.21176470588235294`]], 
+      Cell[
+       StyleData["Chapter", "Presentation"], 
+       CellMargins -> {{67, Inherited}, {10, 15}}, LineSpacing -> {1, 16}, 
+       FontSize -> 48], 
+      Cell[
+       StyleData["Chapter", "SlideShow"], 
+       CellMargins -> {{
+         0.135 FrontEnd`AbsoluteCurrentValue[{WindowSize, 1}], 0.04 
+          FrontEnd`AbsoluteCurrentValue[{WindowSize, 1}]}, {10, 15}}, 
+       LineSpacing -> {1, 2}, FontSize -> 48], 
+      Cell[
+       StyleData["Chapter", "Condensed"], CellMargins -> {{18, 10}, {5, 7}}, 
+       FontSize -> 14], 
+      Cell[
+       StyleData["Chapter", "Printout"], 
+       CellMargins -> {{10, Inherited}, {10, 15}}], 
+      Cell[
+       StyleData["Chapter", "PrintoutGray"], 
+       CellMargins -> {{10, Inherited}, {10, 15}}]}, Open]], 
+   Cell[
+    CellGroupData[{
+      Cell[
+       StyleData["Section"], CellFrame -> False, ShowCellBracket -> True, 
+       CellMargins -> {{20, 30}, {10, 25}}, Evaluatable -> False, 
+       CellGroupingRules -> {"SectionGrouping", 40}, PageBreakBelow -> False, 
+       CellChangeTimes -> {3.716825484342502*^9}, Hyphenation -> False, 
+       CounterIncrements -> "Section", 
+       CounterAssignments -> {{"Subsection", 0}, {"Subsubsection", 0}, {
+         "ItemNumbered", 0}}, AspectRatioFixed -> True, FontFamily -> 
+       "Source Sans Pro", FontSize -> 28, FontTracking -> -0.5, FontColor -> 
+       RGBColor[0.71375, 0.20785, 0.17255]], 
+      Cell[
+       StyleData["Section", "Presentation", StyleDefinitions -> None]], 
+      Cell[
+       StyleData["Section", "SlideShow", StyleDefinitions -> None]], 
+      Cell[
+       StyleData["Section", "Printout", StyleDefinitions -> None]]}, Open]], 
+   Cell[
+    CellGroupData[{
+      Cell[
+       StyleData["Subsection"], ShowCellBracket -> False, 
+       CellMargins -> {{20, 30}, {6, 12}}, 
+       CellGroupingRules -> {"SectionGrouping", 50}, PageBreakBelow -> False, 
+       Hyphenation -> False, LineSpacing -> {1, 1}, CounterIncrements -> 
+       "Subsection", 
+       CounterAssignments -> {{"Subsubsection", 0}, {"ItemNumbered", 0}}, 
+       FontFamily -> "Source Sans Pro", FontSize -> 23, FontTracking -> -0.5, 
+       FontColor -> RGBColor[0.71375, 0.20785, 0.17255]], 
+      Cell[
+       StyleData["Subsection", "Presentation", StyleDefinitions -> None]], 
+      Cell[
+       StyleData["Subsection", "SlideShow", StyleDefinitions -> None]], 
+      Cell[
+       StyleData["Subsection", "Printout", StyleDefinitions -> None]]}, 
+     Closed]], 
+   Cell[
+    CellGroupData[{
+      Cell[
+       StyleData["Subsubsection"], ShowCellBracket -> False, 
+       CellMargins -> {{21, 21}, {2, 8}}, 
+       CellGroupingRules -> {"SectionGrouping", 60}, PageBreakBelow -> False, 
+       Hyphenation -> False, LineSpacing -> {1, 1}, CounterIncrements -> 
+       "Subsubsection", CounterAssignments -> {{"ItemNumbered", 0}}, 
+       FontFamily -> "Source Sans Pro", FontSize -> 18, FontTracking -> -0.5, 
+       FontColor -> RGBColor[0.9254901960784314, 0.49019607843137253`, 0.2]], 
+      Cell[
+       StyleData["Subsubsection", "Presentation", StyleDefinitions -> None]], 
+      Cell[
+       StyleData["Subsubsection", "SlideShow", StyleDefinitions -> None]], 
+      Cell[
+       StyleData["Subsubsection", "Printout", StyleDefinitions -> None]]}, 
+     Closed]], 
+   Cell[
+    StyleData["FurtherExplorationSection"], CellFrame -> {{0, 0}, {0, 0.5}}, 
+    ShowCellBracket -> False, CellMargins -> {{20, 30}, {4, 24}}, 
+    CellGroupingRules -> {"SectionGrouping", 30}, 
+    CellFrameMargins -> {{0, 0}, {0, 22}}, CellFrameColor -> GrayLevel[0.8], 
+    DefaultNewCellStyle -> "FurtherExploration", FontFamily -> 
+    "Source Sans Pro", FontSize -> 18, 
+    FontVariations -> {"CapsType" -> "AllCaps"}, FontColor -> 
+    RGBColor[0.2784313725490196, 0.2784313725490196, 0.2784313725490196]], 
+   Cell[
+    StyleData["FurtherExploration", StyleDefinitions -> StyleData["Text"]], 
+    ShowCellBracket -> False, CellMargins -> {{20, 10}, {2, 4}}, 
+    ReturnCreatesNewCell -> True, FontFamily -> "Source Sans Pro", FontSize -> 
+    16, FontColor -> RGBColor[0.71375, 0.20785, 0.17255]], 
+   Cell[
+    StyleData["AuthorshipSection"], ShowCellBracket -> False, 
+    CellMargins -> {{20, Inherited}, {4, 22}}, 
+    CellGroupingRules -> {"SectionGrouping", 30}, DefaultNewCellStyle -> 
+    "FurtherExploration", FontFamily -> "Source Sans Pro", FontSize -> 18, 
+    FontVariations -> {"CapsType" -> "AllCaps"}, FontColor -> 
+    RGBColor[0.2784313725490196, 0.2784313725490196, 0.2784313725490196]], 
+   Cell[
+    StyleData["Authorship", StyleDefinitions -> StyleData["Text"]], 
+    ShowCellBracket -> False, CellMargins -> {{20, 10}, {2, 4}}, 
+    ReturnCreatesNewCell -> True, FontFamily -> "Source Sans Pro", FontSize -> 
+    16, FontColor -> 
+    RGBColor[0.4392156862745098, 0.4392156862745098, 0.4392156862745098]], 
+   Cell[
+    CellGroupData[{
+      Cell["Styles for Body Text", "Section"], 
+      Cell[
+       CellGroupData[{
+         Cell[
+          StyleData["Text"], ShowCellBracket -> True, 
+          CellMargins -> {{20, 10}, {6, 8}}, ReturnCreatesNewCell -> True, 
+          DefaultNewCellStyle -> "Direction", FontSize -> 
+          15, $CellContext`DefaultReturnCreatedCellStyle -> "Direction"], 
+         Cell[
+          StyleData["Text", "Presentation", StyleDefinitions -> None]], 
+         Cell[
+          StyleData["Text", "SlideShow", StyleDefinitions -> None]], 
+         Cell[
+          StyleData["Text", "Printout", StyleDefinitions -> None], 
+          TextJustification -> 1.]}, Open]], 
+      Cell[
+       StyleData["CodeText", StyleDefinitions -> StyleData["Text"]], 
+       CellMargins -> {{23, 10}, {3, 8}}, CellFrameLabelMargins -> 4, 
+       MenuSortingValue -> 10000, MenuCommandKey -> "8", FontSize -> 15, 
+       FontWeight -> "Plain", FontColor -> 
+       GrayLevel[0.45], $CellContext`DefaultReturnCreatedCellStyle -> 
+       "Input"]}, Open]], 
+   Cell[
+    CellGroupData[{
+      Cell[
+      "Styles for Input, Output and Graphics", "Section", 
+       CellChangeTimes -> {3.7168930720372066`*^9}], 
+      Cell[
+       StyleData["Input"], CellMargins -> {{82, 10}, {5, 6}}, 
+       StyleKeyMapping -> {"=" -> "WolframAlphaShort", "*" -> "Item"}, 
+       AutoNumberFormatting -> False, FontSize -> 13], 
+      Cell[
+       CellGroupData[{
+         Cell[
+          StyleData["InputOnly"], CellMargins -> {{82, 10}, {7, 7}}, FontSize -> 
+          13], 
+         Cell[
+          StyleData["InputOnly", "Presentation"], 
+          CellMargins -> {{100, 10}, {8, 15}}], 
+         Cell[
+          StyleData["InputOnly", "SlideShow"], 
+          CellMargins -> {{100, 10}, {8, 15}}], 
+         Cell[
+          StyleData["InputOnly", "Condensed"], 
+          CellMargins -> {{50, 10}, {2, 3}}], 
+         Cell[
+          StyleData["InputOnly", "Printout"], 
+          CellMargins -> {{49, Inherited}, {Inherited, Inherited}}, 
+          LinebreakAdjustments -> {0.85, 2, 10, 1, 1}], 
+         Cell[
+          StyleData["InputOnly", "PrintoutGray"], 
+          CellMargins -> {{49, Inherited}, {Inherited, Inherited}}, 
+          LinebreakAdjustments -> {0.85, 2, 10, 1, 1}]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell[
+          StyleData["Code"]], 
+         Cell[
+          StyleData["Code", "Presentation"], 
+          CellMargins -> {{100, 10}, {8, 15}}], 
+         Cell[
+          StyleData["Code", "SlideShow"], 
+          CellMargins -> {{
+            0.135 FrontEnd`AbsoluteCurrentValue[{WindowSize, 1}], 0.01 
+             FrontEnd`AbsoluteCurrentValue[{WindowSize, 1}]}, {8, 15}}, 
+          LinebreakAdjustments -> {1, 2., 12., 1., 1.}, FontSize -> 20], 
+         Cell[
+          StyleData["Code", "Condensed"], CellMargins -> {{50, 10}, {2, 3}}], 
+         Cell[
+          StyleData["Code", "Printout"], 
+          CellMargins -> {{49, Inherited}, {Inherited, Inherited}}], 
+         Cell[
+          StyleData["Code", "PrintoutGray"], 
+          CellMargins -> {{49, Inherited}, {Inherited, Inherited}}]}, 
+        Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell[
+          StyleData["Output"], CellMargins -> {{82, 10}, {10, 5}}, FontSize -> 
+          13], 
+         Cell[
+          StyleData["Output", "Presentation"], 
+          CellMargins -> {{100, 10}, {15, 8}}], 
+         Cell[
+          StyleData["Output", "SlideShow"], 
+          CellMargins -> {{
+            0.135 FrontEnd`AbsoluteCurrentValue[{WindowSize, 1}], 0.01 
+             FrontEnd`AbsoluteCurrentValue[{WindowSize, 1}]}, {15, 8}}, 
+          LinebreakAdjustments -> {1, 2., 12., 1., 1.}, FontSize -> 20], 
+         Cell[
+          StyleData["Output", "Condensed"], 
+          CellMargins -> {{50, Inherited}, {3, 2}}], 
+         Cell[
+          StyleData["Output", "Printout"], 
+          CellMargins -> {{49, Inherited}, {9, 3}}], 
+         Cell[
+          StyleData["Output", "PrintoutGray"], 
+          CellMargins -> {{49, Inherited}, {9, 3}}]}, Closed]], 
+      Cell[
+       CellGroupData[{
+         Cell[
+          StyleData["PlacedGraphics"], CellFrame -> False, ShowCellBracket -> 
+          False, CellMargins -> {{82, 21}, {8, 10}}, CellGroupingRules -> 
+          "GraphicsGrouping", CellHorizontalScrolling -> True, ShowCellLabel -> 
+          False, TextAlignment -> Left, LineSpacing -> {1, 1}, 
+          InsetBoxOptions -> {
+           BaseStyle -> {CellFrame -> None, Background -> None}}], 
+         Cell[
+          StyleData[
+          "PlacedGraphics", "Presentation", StyleDefinitions -> None]], 
+         Cell[
+          StyleData["PlacedGraphics", "SlideShow", StyleDefinitions -> None]], 
+         Cell[
+          StyleData["PlacedGraphics", "Printout", StyleDefinitions -> None]]},
+         Closed]], 
+      Cell[
+       StyleData["CellLabel"], LineSpacing -> {1, 1}, AutoNumberFormatting -> 
+       False, FontSize -> 9, FontSlant -> "Oblique"]}, Open]]}, Visible -> 
+  False, FrontEndVersion -> 
+  "11.3 for Microsoft Windows (64-bit) (March 6, 2018)", StyleDefinitions -> 
+  "PrivateStylesheetFormatting.nb"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 112, 0, 139, "Title",ExpressionUUID->"755e0098-9782-4df5-8299-7f54266c54d6"],
+Cell[695, 24, 160, 2, 46, "Abstract",ExpressionUUID->"db4efd27-b72d-4835-a486-b18956bba0cb"],
+Cell[858, 28, 119, 0, 44, "AuthorInfo",ExpressionUUID->"59a63784-4e95-46b9-9a1d-2c013f47161b"],
+Cell[980, 30, 71, 0, 33, "Text",ExpressionUUID->"85271f44-5b04-421c-bf31-0395fab10c35"],
+Cell[1054, 32, 471, 7, 77, "Text",ExpressionUUID->"e6de1f99-99a7-465f-ae4e-5432079c27e2"],
+Cell[CellGroupData[{
+Cell[1550, 43, 113, 0, 71, "Section",ExpressionUUID->"35feb7e4-4e93-4e64-abc0-7b0b86e8128f"],
+Cell[1666, 45, 182, 3, 33, "Text",ExpressionUUID->"55ddc81f-fcf7-4026-af30-c2c4c901f21b"],
+Cell[1851, 50, 168, 3, 33, "Text",ExpressionUUID->"dc3fa30d-000e-45b8-9f6e-f2ffca697a75"],
+Cell[2022, 55, 156, 2, 30, "CodeText",ExpressionUUID->"04094273-c315-434d-a82c-a87bb37837b5"],
+Cell[CellGroupData[{
+Cell[2203, 61, 507, 14, 46, "Input",ExpressionUUID->"76301ac5-6066-4a5e-ab3e-b94399208672"],
+Cell[2713, 77, 262, 5, 406, "Output",ExpressionUUID->"545fe78c-cfb1-4377-97aa-09ae1df490d5"]
+}, Open  ]],
+Cell[2990, 85, 105, 0, 33, "Text",ExpressionUUID->"97910344-de12-42cf-88ff-ef9b5eaa58a2"],
+Cell[3098, 87, 189, 3, 30, "CodeText",ExpressionUUID->"6c5f9fe8-93ae-49f3-bcd6-b36adf89eafa"],
+Cell[CellGroupData[{
+Cell[3312, 94, 560, 16, 46, "Input",ExpressionUUID->"a4b421f3-3232-47ad-b65d-63876d428a0d"],
+Cell[3875, 112, 248, 4, 307, "Output",ExpressionUUID->"8941dc96-ad29-4124-abfd-7a256330ba64"]
+}, Open  ]],
+Cell[4138, 119, 120, 0, 30, "CodeText",ExpressionUUID->"0a8aebba-9fb4-4ff7-8ba3-08876882be7d"],
+Cell[CellGroupData[{
+Cell[4283, 123, 654, 17, 46, "Input",ExpressionUUID->"7438295b-2fdb-4b60-9462-2849043a6d73"],
+Cell[4940, 142, 676, 11, 246, "Output",ExpressionUUID->"421c2047-179b-4341-94ee-6237cec596e3"]
+}, Open  ]],
+Cell[5631, 156, 75, 0, 30, "CodeText",ExpressionUUID->"6047e34c-4783-4ed0-b0de-5328517365be"],
+Cell[5709, 158, 142, 2, 33, "Text",ExpressionUUID->"eac9002a-91b3-47dd-97fa-5c021bc507be"],
+Cell[5854, 162, 150, 2, 30, "CodeText",ExpressionUUID->"08045b27-827e-4442-a2d1-b23256f28467"],
+Cell[6007, 166, 459, 13, 46, "Input",ExpressionUUID->"81b44ae6-0928-401d-aeb5-3029b008bb57"],
+Cell[6469, 181, 133, 0, 33, "Text",ExpressionUUID->"4113e23b-ca90-4918-8e4b-c32c24b09e2f"],
+Cell[CellGroupData[{
+Cell[6627, 185, 2005, 61, 84, "Input",ExpressionUUID->"6a57f104-ade9-4e69-9c46-f4f2c59d53ab"],
+Cell[8635, 248, 996, 21, 244, "Output",ExpressionUUID->"8a2020d3-fa8f-4327-a751-a55e8218e6f2"]
+}, Open  ]],
+Cell[9646, 272, 277, 4, 33, "Text",ExpressionUUID->"ed17a622-9bfc-49e7-b66d-c4bc3183e92a"],
+Cell[9926, 278, 122, 0, 30, "CodeText",ExpressionUUID->"8791ca20-0791-41ff-9c03-26b65126dc26"],
+Cell[CellGroupData[{
+Cell[10073, 282, 1737, 46, 122, "Input",ExpressionUUID->"04952fd0-3c88-4376-932c-6f275f5633fb"],
+Cell[11813, 330, 1972, 40, 492, "Output",ExpressionUUID->"2e9c9120-53b9-4459-94b7-314c39ca618c"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13834, 376, 94, 0, 71, "Section",ExpressionUUID->"69c2789e-757d-42de-8e7a-aa67a7c35b9d"],
+Cell[CellGroupData[{
+Cell[13953, 380, 103, 0, 47, "Subsection",ExpressionUUID->"7de5c4c6-a64b-46a1-a690-20421acf8327"],
+Cell[14059, 382, 367, 5, 55, "Text",ExpressionUUID->"0ed2d935-e8ff-4c05-9e95-1dd6631482fc"],
+Cell[14429, 389, 247, 4, 30, "CodeText",ExpressionUUID->"a127144d-d9f3-4e73-9654-4e9ded4f56d8"],
+Cell[CellGroupData[{
+Cell[14701, 397, 680, 18, 65, "Input",ExpressionUUID->"2166a8f0-014c-4f32-8947-05a4e3dfd919"],
+Cell[15384, 417, 451, 9, 372, "Output",ExpressionUUID->"8122889f-79d0-4054-a5b8-b495b0bf4c10"]
+}, Open  ]],
+Cell[15850, 429, 178, 3, 33, "Text",ExpressionUUID->"4813e97b-6074-4845-b079-05dfadd34088"],
+Cell[CellGroupData[{
+Cell[16053, 436, 734, 20, 46, "Input",ExpressionUUID->"fee92e2d-7431-4ad6-8a70-f307a778cde7"],
+Cell[16790, 458, 533, 10, 231, "Output",ExpressionUUID->"dcc9b232-d244-4834-98b0-eca5b9a4f791"]
+}, Open  ]],
+Cell[17338, 471, 75, 0, 30, "CodeText",ExpressionUUID->"7a9ac988-03a4-4c18-9dca-ea7cdc6e168b"],
+Cell[17416, 473, 245, 4, 33, "Text",ExpressionUUID->"e3998e4d-7b72-4f12-ab60-8520725af581"],
+Cell[CellGroupData[{
+Cell[17686, 481, 1231, 35, 65, "Input",ExpressionUUID->"ad0b436e-e8ca-4f72-b448-c2ec1b4c77b8"],
+Cell[18920, 518, 683, 12, 407, "Output",ExpressionUUID->"383b510a-c754-477c-a91b-4efe58e58185"]
+}, Open  ]],
+Cell[19618, 533, 103, 0, 33, "Text",ExpressionUUID->"096e9eb5-c4b2-4b0b-9ce3-0ad151da7e2e"],
+Cell[CellGroupData[{
+Cell[19746, 537, 1524, 42, 84, "Input",ExpressionUUID->"74f33309-d2d3-4adc-ab01-59817042e2af"],
+Cell[21273, 581, 1934, 39, 413, "Output",ExpressionUUID->"54655d01-1d31-41cd-b1b0-c9e9d25d6773"]
+}, Open  ]],
+Cell[23222, 623, 346, 7, 33, "Text",ExpressionUUID->"844073b2-751d-4156-a5a3-8ac3263913fd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23605, 635, 96, 0, 47, "Subsection",ExpressionUUID->"095b52fc-d65a-4680-aa1a-6459bbde1834"],
+Cell[23704, 637, 224, 3, 33, "Text",ExpressionUUID->"62fae394-505e-42a5-9eb9-369e0021c3f9"],
+Cell[23931, 642, 313, 7, 30, "CodeText",ExpressionUUID->"3d1bea77-32b7-4149-ab3d-99850f85732c"],
+Cell[CellGroupData[{
+Cell[24269, 653, 777, 23, 84, "Input",ExpressionUUID->"d2d39365-b24d-4364-b0ac-ed622555e818"],
+Cell[25049, 678, 193, 3, 190, "Output",ExpressionUUID->"d5e157b6-8b40-4a99-845d-223baa9d7402"]
+}, Open  ]],
+Cell[25257, 684, 207, 3, 33, "Text",ExpressionUUID->"fabfadc3-5ca0-464f-8a65-39da94f33259"],
+Cell[25467, 689, 201, 3, 30, "CodeText",ExpressionUUID->"924017ca-4807-4f24-a9c2-8bf99b6bb8b6"],
+Cell[CellGroupData[{
+Cell[25693, 696, 2620, 74, 122, "Input",ExpressionUUID->"8fd1a1d3-fadb-4c89-87d4-5cf7ff656488"],
+Cell[28316, 772, 369, 7, 183, "Output",ExpressionUUID->"ceb29933-785f-4b9f-985d-78de85d559bb"]
+}, Open  ]],
+Cell[28700, 782, 272, 4, 33, "Text",ExpressionUUID->"a6d93f5e-b4d0-416c-a86f-bd0ab2bb2dd3"],
+Cell[28975, 788, 105, 0, 30, "CodeText",ExpressionUUID->"781246fe-22ef-4f08-948a-c3645733bca0"],
+Cell[CellGroupData[{
+Cell[29105, 792, 3446, 106, 122, "Input",ExpressionUUID->"54de077f-6dc5-4556-b12e-b8cb8dbc9628"],
+Cell[32554, 900, 919, 18, 183, "Output",ExpressionUUID->"56f0f51a-b1de-4f18-91fa-67c53d27c506"]
+}, Open  ]],
+Cell[33488, 921, 607, 16, 41, "Text",ExpressionUUID->"f08c8260-3b8f-417e-9dd0-480286bd4ad7"],
+Cell[34098, 939, 110, 0, 33, "Text",ExpressionUUID->"155ca796-cd21-475a-b94a-86db58b2d210"],
+Cell[34211, 941, 209, 3, 30, "CodeText",ExpressionUUID->"d843212c-8ecd-4bf2-8818-fb93661e84b7"],
+Cell[CellGroupData[{
+Cell[34445, 948, 2959, 87, 181, "Input",ExpressionUUID->"3ae97627-3be8-4a76-b9d7-fee64a03a58c"],
+Cell[37407, 1037, 742, 14, 165, "Output",ExpressionUUID->"ac500b0d-8b1b-4dbf-8eec-b9f8c35c74a8"]
+}, Open  ]],
+Cell[38164, 1054, 757, 18, 57, "Text",ExpressionUUID->"dcf8262e-9b22-450d-8597-98b30205f410"],
+Cell[38924, 1074, 234, 3, 33, "Text",ExpressionUUID->"03f521e9-9f2d-4d39-b95a-f148249d06ca"],
+Cell[39161, 1079, 1764, 54, 117, "DisplayFormula",ExpressionUUID->"e8842056-5081-426d-ac03-9e75e7db8fff"],
+Cell[40928, 1135, 100, 0, 33, "Text",ExpressionUUID->"f8f4aaa0-fee4-4e3f-8c8e-f8997d850877"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41077, 1141, 85, 0, 71, "Section",ExpressionUUID->"9da19663-7179-45c9-8160-ad35832309c2"],
+Cell[41165, 1143, 516, 7, 77, "Text",ExpressionUUID->"45c45f6e-321c-4ce7-9657-950c1134d308"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41718, 1155, 100, 0, 71, "Section",ExpressionUUID->"a78f6e4f-dbdf-4763-a44f-16569b36e665"],
+Cell[41821, 1157, 90, 0, 33, "Text",ExpressionUUID->"44146aed-2d19-4c66-bfba-1e67f1c1dfb3"],
+Cell[41914, 1159, 98, 0, 30, "CodeText",ExpressionUUID->"937b5485-dc17-48dd-9aab-cd2430b3e333"],
+Cell[CellGroupData[{
+Cell[42037, 1163, 353, 8, 26, "Input",ExpressionUUID->"db031af0-ae61-40a0-8a8e-f247bccedf03"],
+Cell[42393, 1173, 6105, 104, 35, "Output",ExpressionUUID->"e12dac55-0c44-4d97-98a4-46212aaae6e5"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
