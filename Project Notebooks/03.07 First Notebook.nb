@@ -1,0 +1,345 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11746,        337]
+NotebookOptionsPosition[      8323,        265]
+NotebookOutlinePosition[      9117,        291]
+CellTagsIndexPosition[      8989,        285]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["First implementation attempt of Infinite lists as functions", "Chapter",ExpressionUUID->"175854de-1d6b-4ea6-a3be-edec57df1174"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"InfiniteList", "[", 
+     RowBox[{"direction_", ",", "rule_"}], "]"}], "[", "n_Integer", "]"}], ":=",
+    " ", 
+   RowBox[{"rule", "@", "n"}]}], ";"}]], "Input",
+ CellLabel->"In[13]:=",ExpressionUUID->"0a677401-fcba-4ee6-8ee6-967f8e09bbcc"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"InfiniteList", "[", 
+   RowBox[{"1", ",", 
+    RowBox[{"x", "\[Function]", 
+     RowBox[{"x", "^", "2"}]}]}], "]"}], "[", "4", "]"}]], "Input",
+ CellLabel->"In[14]:=",ExpressionUUID->"836baa4a-1e45-4a2c-ab87-13346d1f08d2"],
+
+Cell[BoxData["16"], "Output",
+ CellLabel->"Out[14]=",ExpressionUUID->"28de1a52-c5df-4863-a59c-57e8022191b3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "AppendTo"}]], "Input",
+ CellLabel->"In[15]:=",ExpressionUUID->"e27d7fca-f79e-432b-b8cf-b86dc1bbfc05"],
+
+Cell[BoxData[
+ RowBox[{"\<\"\\!\\(\\*RowBox[{\\\"AppendTo\\\", \\\"[\\\", RowBox[{StyleBox[\
+\\\"s\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"elem\\\", \\\"TI\\\"]}], \
+\\\"]\\\"}]\\) appends \\!\\(\\*StyleBox[\\\"elem\\\", \\\"TI\\\"]\\) to the \
+value of \\!\\(\\*StyleBox[\\\"s\\\", \\\"TI\\\"]\\), and resets \
+\\!\\(\\*StyleBox[\\\"s\\\", \\\"TI\\\"]\\) to the result. \"\>", 
+  "\[NonBreakingSpace]", 
+  ButtonBox[
+   StyleBox["\[RightSkeleton]", "SR"],
+   Active->True,
+   BaseStyle->"Link",
+   ButtonData->"paclet:ref/AppendTo"]}]], "Print", "PrintUsage",
+ CellTags->
+  "Info153739627091-4657969",ExpressionUUID->"28f4b717-2849-432e-9e61-\
+df406e65150d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "Append"}]], "Input",
+ CellLabel->"In[16]:=",ExpressionUUID->"1eec9f95-595c-4982-b1f7-f9c03b33aa3d"],
+
+Cell[BoxData[
+ RowBox[{"\<\"\\!\\(\\*RowBox[{\\\"Append\\\", \\\"[\\\", RowBox[{StyleBox[\\\
+\"expr\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"elem\\\", \\\"TI\\\"]}], \
+\\\"]\\\"}]\\) gives \\!\\(\\*StyleBox[\\\"expr\\\", \\\"TI\\\"]\\) with \
+\\!\\(\\*StyleBox[\\\"elem\\\", \\\"TI\\\"]\\) appended. \\n\\!\\(\\*RowBox[{\
+\\\"Append\\\", \\\"[\\\", StyleBox[\\\"elem\\\", \\\"TI\\\"], \\\"]\\\"}]\\) \
+represents an operator form of Append that can be applied to an expression.\"\
+\>", "\[NonBreakingSpace]", 
+  ButtonBox[
+   StyleBox["\[RightSkeleton]", "SR"],
+   Active->True,
+   BaseStyle->"Link",
+   ButtonData->"paclet:ref/Append"]}]], "Print", "PrintUsage",
+ CellTags->
+  "Info163739627181-4657969",ExpressionUUID->"a23e85f3-1be2-4445-a040-\
+b69f17ec4658"]
+}, Open  ]],
+
+Cell["trying for direction 1 lists:", "Text",ExpressionUUID->"d7f75899-689d-44f8-8713-53535362dc31"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"InfiniteListAppend", "[", 
+        RowBox[{
+         RowBox[{"InfiniteList", "[", 
+          RowBox[{"direction_", ",", "rule_"}], "]"}], ",", "elem_"}], "]"}], 
+       "[", "1", "]"}], ":=", "elem"}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"InfiniteListAppend", "[", 
+        RowBox[{
+         RowBox[{"InfiniteList", "[", 
+          RowBox[{"direction_", ",", "rule_"}], "]"}], ",", "elem_"}], "]"}], 
+       "[", "n_", "]"}], ":=", 
+      RowBox[{"rule", "@", 
+       RowBox[{"(", 
+        RowBox[{"n", "-", "1"}], ")"}]}]}], ";", " ", "\[IndentingNewLine]", 
+     RowBox[{"WILL", " ", "NOT", " ", "WORK"}]}], ",", " ", 
+    RowBox[{
+    "NEEDS", " ", "TO", " ", "RETURN", " ", "A", " ", "InfiniteList"}]}], 
+   "*)"}], "\[IndentingNewLine]"}]], "Input",ExpressionUUID->"afa31e70-5e83-\
+4311-9cac-c84b240e2f21"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"InfiniteListAppend", "[", 
+   RowBox[{
+    RowBox[{"InfiniteList", "[", 
+     RowBox[{"direction_", ",", "rule_"}], "]"}], ",", "elem_"}], "]"}], ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"newrule", "=", " ", 
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"#", "\[Equal]", "1"}], ",", "elem", ",", 
+         RowBox[{"rule", "@", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", "1"}], ")"}]}]}], "]"}], "&"}]}], 
+     "\[IndentingNewLine]", "}"}], ",", " ", 
+    RowBox[{"InfiniteList", "[", 
+     RowBox[{"direction", ",", "newrule"}], "]"}]}], "]"}]}]], "Input",
+ CellLabel->"In[23]:=",ExpressionUUID->"22fc241f-2222-41f7-874a-1cfc9d0c784a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"InputForm", "[", 
+  RowBox[{
+   RowBox[{"#", "^", "2"}], " ", "&"}], "]"}]], "Input",
+ CellLabel->"In[17]:=",ExpressionUUID->"4b1cdd8d-eafe-4600-ab73-81d7e3d5acc6"],
+
+Cell["#1^2 &", "Output",
+ CellLabel->
+  "Out[17]//InputForm=",ExpressionUUID->"39cc3b8e-ecd2-4de8-80ba-\
+aaad00404aae"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"InputForm", "[", 
+  RowBox[{"x", "\[Function]", 
+   RowBox[{"x", "^", "2"}]}], "]"}]], "Input",
+ CellLabel->"In[18]:=",ExpressionUUID->"e25fc75a-31ee-4411-8083-7019a26c6caa"],
+
+Cell["Function[x, x^2]", "Output",
+ CellLabel->
+  "Out[18]//InputForm=",ExpressionUUID->"7ff8218d-a3f2-4ed5-8b4c-\
+03c71efd2541"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myinfiniteList", "=", 
+  RowBox[{"InfiniteList", "[", 
+   RowBox[{"1", ",", 
+    RowBox[{"x", "\[Function]", 
+     RowBox[{"Cos", "[", 
+      RowBox[{"x", "*", 
+       RowBox[{"\[Pi]", "/", "10"}]}], "]"}]}]}], "]"}]}]], "Input",
+ CellLabel->"In[21]:=",ExpressionUUID->"8ef1664e-1b44-466c-a7ba-d79638ec747d"],
+
+Cell[BoxData[
+ RowBox[{"InfiniteList", "[", 
+  RowBox[{"1", ",", 
+   RowBox[{"Function", "[", 
+    RowBox[{"x", ",", 
+     RowBox[{"Cos", "[", 
+      FractionBox[
+       RowBox[{"x", " ", "\[Pi]"}], "10"], "]"}]}], "]"}]}], "]"}]], "Output",
+ CellLabel->"Out[21]=",ExpressionUUID->"8da99cf2-1d80-45a9-ab5e-b68832a75d96"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myinfiniteList", "[", "1", "]"}]], "Input",
+ CellLabel->"In[22]:=",ExpressionUUID->"f65385db-e01d-441d-8148-c2238d023c7d"],
+
+Cell[BoxData[
+ SqrtBox[
+  RowBox[{
+   FractionBox["5", "8"], "+", 
+   FractionBox[
+    SqrtBox["5"], "8"]}]]], "Output",
+ CellLabel->"Out[22]=",ExpressionUUID->"c62a1104-7d9e-4ae3-babc-c002e50b6a3c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myAppendedList", "=", 
+  RowBox[{"InfiniteListAppend", "[", 
+   RowBox[{"myinfiniteList", ",", "23"}], "]"}]}]], "Input",
+ CellLabel->"In[24]:=",ExpressionUUID->"ec4e7c2f-e22c-4c80-bb0d-fbfb3a1bc60a"],
+
+Cell[BoxData[
+ RowBox[{"InfiniteList", "[", 
+  RowBox[{"1", ",", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"#1", "\[Equal]", "1"}], ",", "23", ",", 
+      RowBox[{
+       RowBox[{"Function", "[", 
+        RowBox[{"x", ",", 
+         RowBox[{"Cos", "[", 
+          FractionBox[
+           RowBox[{"x", " ", "\[Pi]"}], "10"], "]"}]}], "]"}], "[", 
+       RowBox[{"#1", "-", "1"}], "]"}]}], "]"}], "&"}]}], "]"}]], "Output",
+ CellLabel->"Out[24]=",ExpressionUUID->"f9849972-91ae-41fd-8e7a-e835cfa10ef9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myAppendedList", "[", "1", "]"}]], "Input",
+ CellLabel->"In[25]:=",ExpressionUUID->"5448b48e-04dc-4b58-b8b2-d73541d28b48"],
+
+Cell[BoxData["23"], "Output",
+ CellLabel->"Out[25]=",ExpressionUUID->"8f85c436-32ad-4ac6-8634-9d9756f4aad0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myAppendedList", "[", "2", "]"}]], "Input",
+ CellLabel->"In[26]:=",ExpressionUUID->"83220b9d-a07c-4316-bfef-7835d96fb371"],
+
+Cell[BoxData[
+ SqrtBox[
+  RowBox[{
+   FractionBox["5", "8"], "+", 
+   FractionBox[
+    SqrtBox["5"], "8"]}]]], "Output",
+ CellLabel->"Out[26]=",ExpressionUUID->"c1c36649-c08f-46de-817e-2a79cc0ad1d4"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1280, 646},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.3 for Microsoft Windows (64-bit) (March 6, 2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info153739627091-4657969"->{
+  Cell[1579, 54, 661, 14, 45, "Print",ExpressionUUID->"28f4b717-2849-432e-9e61-df406e65150d",
+   CellTags->"Info153739627091-4657969"]},
+ "Info163739627181-4657969"->{
+  Cell[2408, 77, 763, 15, 69, "Print",ExpressionUUID->"a23e85f3-1be2-4445-a040-b69f17ec4658",
+   CellTags->"Info163739627181-4657969"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info153739627091-4657969", 8661, 276},
+ {"Info163739627181-4657969", 8829, 279}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 133, 0, 67, "Chapter",ExpressionUUID->"175854de-1d6b-4ea6-a3be-edec57df1174"],
+Cell[716, 24, 300, 8, 28, "Input",ExpressionUUID->"0a677401-fcba-4ee6-8ee6-967f8e09bbcc"],
+Cell[CellGroupData[{
+Cell[1041, 36, 257, 6, 28, "Input",ExpressionUUID->"836baa4a-1e45-4a2c-ab87-13346d1f08d2"],
+Cell[1301, 44, 108, 1, 32, "Output",ExpressionUUID->"28de1a52-c5df-4863-a59c-57e8022191b3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1446, 50, 130, 2, 28, "Input",ExpressionUUID->"e27d7fca-f79e-432b-b8cf-b86dc1bbfc05"],
+Cell[1579, 54, 661, 14, 45, "Print",ExpressionUUID->"28f4b717-2849-432e-9e61-df406e65150d",
+ CellTags->"Info153739627091-4657969"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2277, 73, 128, 2, 28, "Input",ExpressionUUID->"1eec9f95-595c-4982-b1f7-f9c03b33aa3d"],
+Cell[2408, 77, 763, 15, 69, "Print",ExpressionUUID->"a23e85f3-1be2-4445-a040-b69f17ec4658",
+ CellTags->"Info163739627181-4657969"]
+}, Open  ]],
+Cell[3186, 95, 100, 0, 34, "Text",ExpressionUUID->"d7f75899-689d-44f8-8713-53535362dc31"],
+Cell[3289, 97, 987, 26, 105, "Input",ExpressionUUID->"afa31e70-5e83-4311-9cac-c84b240e2f21"],
+Cell[4279, 125, 771, 21, 67, "Input",ExpressionUUID->"22fc241f-2222-41f7-874a-1cfc9d0c784a"],
+Cell[CellGroupData[{
+Cell[5075, 150, 188, 4, 28, "Input",ExpressionUUID->"4b1cdd8d-eafe-4600-ab73-81d7e3d5acc6"],
+Cell[5266, 156, 119, 3, 46, "Output",ExpressionUUID->"39cc3b8e-ecd2-4de8-80ba-aaad00404aae"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5422, 164, 198, 4, 28, "Input",ExpressionUUID->"e25fc75a-31ee-4411-8083-7019a26c6caa"],
+Cell[5623, 170, 129, 3, 46, "Output",ExpressionUUID->"7ff8218d-a3f2-4ed5-8b4c-03c71efd2541"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5789, 178, 332, 8, 28, "Input",ExpressionUUID->"8ef1664e-1b44-466c-a7ba-d79638ec747d"],
+Cell[6124, 188, 320, 8, 53, "Output",ExpressionUUID->"8da99cf2-1d80-45a9-ab5e-b68832a75d96"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6481, 201, 146, 2, 28, "Input",ExpressionUUID->"f65385db-e01d-441d-8148-c2238d023c7d"],
+Cell[6630, 205, 199, 6, 73, "Output",ExpressionUUID->"c62a1104-7d9e-4ae3-babc-c002e50b6a3c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6866, 216, 224, 4, 28, "Input",ExpressionUUID->"ec4e7c2f-e22c-4c80-bb0d-fbfb3a1bc60a"],
+Cell[7093, 222, 523, 14, 53, "Output",ExpressionUUID->"f9849972-91ae-41fd-8e7a-e835cfa10ef9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7653, 241, 146, 2, 28, "Input",ExpressionUUID->"5448b48e-04dc-4b58-b8b2-d73541d28b48"],
+Cell[7802, 245, 108, 1, 32, "Output",ExpressionUUID->"8f85c436-32ad-4ac6-8634-9d9756f4aad0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7947, 251, 146, 2, 28, "Input",ExpressionUUID->"83220b9d-a07c-4316-bfef-7835d96fb371"],
+Cell[8096, 255, 199, 6, 106, "Output",ExpressionUUID->"c1c36649-c08f-46de-817e-2a79cc0ad1d4"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
