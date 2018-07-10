@@ -218,6 +218,7 @@ With[{newrule=If[Mod[#,2]==1,x,rule@(#/2)]&},InfiniteList[direction,newrule]]/;d
 
 
 (*InfiniteSelectRule, InfiniteSelect*)
+
 (*First I'm implementing a way to get the nth element that satisfies an specific condition*)
 InfiniteSelectRule[1,rule_,condition_][n_Integer]:= InfiniteSelectRule[1,rule,condition][n]= (*direction 1 assumes n>0*)
 	Module[{countCases=0,i=1},
@@ -380,8 +381,6 @@ With[{newrule=Sum[Times[rule1[j],rule2[#+1-j]],{j,1,#}]&
 (*this is a cellular automaton that accepts an infinite list as an initial condition, 
 it is a direction 1 infinite list, of direction 0 infinite lists.*)
 
-ClearAll[InfiniteCellularAutomatonStep];Clear[InfiniteCellularAutomatonStep];Clear[InfiniteCellularAutomaton];
-ClearAll[InfiniteCellularAutomaton]
 InfiniteCellularAutomatonStep[cellularrule_,InfiniteList[0,rule_ ]]:=
 With[{newrule=Part[CellularAutomaton[cellularrule,{rule@(#-1),rule@#,rule@(#+1)}],2]&
 }, InfiniteList[0,newrule]]
