@@ -90,6 +90,17 @@ InfiniteLength[InfiniteList[direction_,rule_]]=Infinity; (*by far the easiest*)
 
 
 
+(*InfinitePrint*)
+(*This shows some elements of the infnite list*)
+InfinitePrint[InfiniteList[0,rule_],n_:5]:=
+Print[Join[{"..."},InfiniteTake[InfiniteList[0,rule],{-n,n}],{"..."}]]
+InfinitePrint[InfiniteList[1,rule_],n_:5]:=
+Print[Join[InfiniteTake[InfiniteList[1,rule],n],{"..."}]]
+InfinitePrint[InfiniteList[-1,rule_],n_:-5]:=
+Print[Join[{"..."},Reverse[InfiniteTake[InfiniteList[-1,rule],n]]]]
+ (*the Reverse is here because of how infiniteTake works for -1 lists*)
+
+
 (*InfiniteDrop*)
 InfiniteDrop[InfiniteList[direction_,rule_],n_Integer]:=
 	With[{newrule= rule@(#+n)&},
